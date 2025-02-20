@@ -1,6 +1,8 @@
 function Header() {
     return (
-        <h1>Header</h1>
+        <div className="main-grid">
+            <h1>Header</h1>
+        </div>
     )
 }
 
