@@ -3,15 +3,14 @@ import Specials from "./Specials";
 import Testimonials from "./Testimonials";
 import OurStory from "./OurStory";
 
-const Home = () => {
+function HomePage() {
   return (
-    <>
+    <div>
       <Hero />
       <Specials />
       <Testimonials />
       <OurStory />
-    </>
+    </div>
   );
-};
-
-export default Home;
+}
+export default HomePage;
