@@ -1,92 +1,179 @@
-import React, { useState } from "react";
-import "./BookingForm.css"; // Optional: Add styles
+import React from "react";
+import { Formik } from "formik";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import FormField from "./FormField";
+import emailjs from "@emailjs/browser";
 
-const BookingForm = ({ availableTimes, dispatch }) => {
-  const [name, setName] = useState("");
-  const [mail, setMail] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [guests, setGuests] = useState(1);
-  const [occasion, setOccasion] = useState("Birthday");
+const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
+  const navigate = useNavigate();
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-    dispatch({ type: "UPDATE_TIMES", date: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Reservation details:", { date, time, guests, occasion });
-    alert("Reservation submitted!");
-  };
+  const minimumDate = new Date().toISOString().split("T")[0];
+  const minimumNumberOfGuests = 1;
+  const maximumNumberOfGuests = 10;
+  const occasions = ["Birthday", "Anniversary", "Engagement", "Other"];
 
   return (
-    <form onSubmit={handleSubmit} className="booking-form">
-      <label htmlFor="res-name">Please enter your name</label>
-      <input
-        type="name"
-        id="res-name"
-        value={name}
-        onChange={handleDateChange}
-        required
-      />
+    <Formik
+      initialValues={{
+        name: "",
+        mail: "",
+        date: minimumDate,
+        time: availableTimes?.[0] || "",
+        numberOfGuests: minimumNumberOfGuests,
+        occasion: occasions[0],
+      }}
+      validate={(values) => {
+        const errors = {};
+        if (!values.name) errors.name = "Please enter your name";
+        if (!values.mail) errors.mail = "Please enter an email";
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.mail))
+          errors.mail = "Invalid email address";
+        if (!values.date) errors.date = "Please choose a valid date";
+        if (!values.time) errors.time = "Please choose a valid time";
+        if (
+          !values.numberOfGuests ||
+          values.numberOfGuests < minimumNumberOfGuests ||
+          values.numberOfGuests > maximumNumberOfGuests
+        )
+          errors.numberOfGuests = `Please enter a number between ${minimumNumberOfGuests} and ${maximumNumberOfGuests}`;
+        if (!values.occasion) errors.occasion = "Please choose a valid occasion";
+        return errors;
+      }}
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          // ✅ Send confirmation email (Non-blocking)
+          emailjs
+            .send(
+              "service_8itxpe6",
+              "template_vj18l5d",
+              {
+                from_name: "Little Lemon",
+                user_email: values.mail,
+                to_name: values.name,
+                message: `You have a reservation on ${values.date} at ${values.time} for ${values.numberOfGuests} guests.`,
+              },
+              "oudjTkngFbimknqaW"
+            )
+            .then(() => console.log("✅ Email sent successfully"))
+            .catch((error) => console.error("❌ Error sending email:", error));
 
-<label htmlFor="res-mail">Please enter an email</label>
-      <input
-        type="mail"
-        id="res-mail"
-        value={mail}
-        onChange={handleDateChange}
-        required
-      />
-      
-      <label htmlFor="res-date">Choose date</label>
-      <input
-        type="date"
-        id="res-date"
-        value={date}
-        onChange={handleDateChange}
-        required
-      />
+          // ✅ Ensure API call completes before navigating
+          const success = await submitForm(values);
 
-      <label htmlFor="res-time">Choose time</label>
-      <select
-        id="res-time"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-        required
-      >
-        <option value="">Select a time</option>
-        {availableTimes.map((t) => (
-          <option key={t} value={t}>
-            {t}
-          </option>
-        ))}
-      </select>
+          if (!success) {
+            console.error("❌ Form submission failed. Not navigating.");
+          }
+        } finally {
+          setSubmitting(false);
+        }
+      }}
+    >
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+      }) => (
+        <form onSubmit={handleSubmit}>
+          <FormField label="Name" htmlFor="reservation-name">
+            <input
+              type="text"
+              name="name"
+              id="reservation-name"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.name}
+            />
+            {errors.name && touched.name && <div className="error">{errors.name}</div>}
+          </FormField>
 
-      <label htmlFor="guests">Number of guests</label>
-      <input
-        type="number"
-        id="guests"
-        min="1"
-        max="10"
-        value={guests}
-        onChange={(e) => setGuests(e.target.value)}
-        required
-      />
+          <FormField label="Email address" htmlFor="reservation-mail">
+            <input
+              type="email"
+              name="mail"
+              id="reservation-mail"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.mail}
+            />
+            {errors.mail && touched.mail && <div className="error">{errors.mail}</div>}
+          </FormField>
 
-      <label htmlFor="occasion">Occasion</label>
-      <select
-        id="occasion"
-        value={occasion}
-        onChange={(e) => setOccasion(e.target.value)}
-      >
-        <option value="Birthday">Birthday</option>
-        <option value="Anniversary">Anniversary</option>
-      </select>
+          <FormField label="Date" htmlFor="reservation-date">
+            <input
+              type="date"
+              name="date"
+              id="reservation-date"
+              min={minimumDate}
+              onChange={(e) => {
+                handleChange(e);
+                dispatchOnDateChange(e.target.value);
+              }}
+              onBlur={handleBlur}
+              value={values.date}
+            />
+            {errors.date && touched.date && <div className="error">{errors.date}</div>}
+          </FormField>
 
-      <button type="submit">Make Your Reservation</button>
-    </form>
+          <FormField label="Time" htmlFor="reservation-time">
+            <select
+              name="time"
+              id="reservation-time"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.time}
+            >
+              {availableTimes.map((time) => (
+                <option key={time} value={time}>
+                  {time}
+                </option>
+              ))}
+            </select>
+            {errors.time && touched.time && <div className="error">{errors.time}</div>}
+          </FormField>
+
+          <FormField label="Number of guests" htmlFor="reservation-number-guests">
+            <input
+              type="number"
+              name="numberOfGuests"
+              id="reservation-number-guests"
+              min={minimumNumberOfGuests}
+              max={maximumNumberOfGuests}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.numberOfGuests}
+            />
+            {errors.numberOfGuests && touched.numberOfGuests && (
+              <div className="error">{errors.numberOfGuests}</div>
+            )}
+          </FormField>
+
+          <FormField label="Occasion" htmlFor="reservation-occasion">
+            <select
+              name="occasion"
+              id="reservation-occasion"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.occasion}
+            >
+              {occasions.map((occasion) => (
+                <option key={occasion} value={occasion}>
+                  {occasion}
+                </option>
+              ))}
+            </select>
+            {errors.occasion && touched.occasion && <div className="error">{errors.occasion}</div>}
+          </FormField>
+
+          <button className="button-primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Processing..." : "Reserve now!"}
+          </button>
+        </form>
+      )}
+    </Formik>
   );
 };
 

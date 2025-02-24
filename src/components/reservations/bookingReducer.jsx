@@ -1,6 +1,12 @@
-// src/utils/bookingReducer.js
-export const initializeTimes = () => ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00"];
+import { fetchAPI } from "../api";
+
+export const initializeTimes = () => {
+  return fetchAPI(new Date().toISOString().split("T")[0]); // Get times for today
+};
 
 export const updateTimes = (state, action) => {
-  return state; // For now, it returns the same state
+  if (action.type === "UPDATE_TIMES") {
+    return fetchAPI(action.date); // Fetch available times for new date
+  }
+  return state;
 };
