@@ -1,9 +1,10 @@
-import { initializeTimes, updateTimes } from "./bookingReducer";
+import { initializeTimes, updateTimes } from "../bookingReducer";
 import { fetchAPI } from "../api";  // Import fetchAPI
 
 jest.mock("../api", () => ({
-  fetchAPI: jest.fn(() => ["17:00", "18:00", "19:00"]), // Mock response
+  fetchAPI: jest.fn(() => Promise.resolve(["17:00", "18:00", "19:00"]))
 }));
+
 
 test("initializeTimes should return available times from fetchAPI", () => {
   const result = initializeTimes();

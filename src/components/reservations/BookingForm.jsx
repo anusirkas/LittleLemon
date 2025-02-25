@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useNavigate } from "react-router-dom";
 import FormField from "./FormField";
 import emailjs from "@emailjs/browser";
 
@@ -24,24 +24,31 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
       }}
       validate={(values) => {
         const errors = {};
+
         if (!values.name) errors.name = "Please enter your name";
+        else if (values.name.length < 2) errors.name = "Name must be at least 2 characters";
+
         if (!values.mail) errors.mail = "Please enter an email";
         else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.mail))
           errors.mail = "Invalid email address";
+
         if (!values.date) errors.date = "Please choose a valid date";
+
         if (!values.time) errors.time = "Please choose a valid time";
+
         if (
           !values.numberOfGuests ||
           values.numberOfGuests < minimumNumberOfGuests ||
           values.numberOfGuests > maximumNumberOfGuests
         )
-          errors.numberOfGuests = `Please enter a number between ${minimumNumberOfGuests} and ${maximumNumberOfGuests}`;
+          errors.numberOfGuests = `Guests must be between ${minimumNumberOfGuests} and ${maximumNumberOfGuests}`;
+
         if (!values.occasion) errors.occasion = "Please choose a valid occasion";
+
         return errors;
       }}
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          // ✅ Send confirmation email (Non-blocking)
           emailjs
             .send(
               "service_8itxpe6",
@@ -57,7 +64,6 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
             .then(() => console.log("✅ Email sent successfully"))
             .catch((error) => console.error("❌ Error sending email:", error));
 
-          // ✅ Ensure API call completes before navigating
           const success = await submitForm(values);
 
           if (!success) {
@@ -76,8 +82,9 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
         handleBlur,
         handleSubmit,
         isSubmitting,
+        isValid, // ✅ New: Use this to disable submit button when invalid
       }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <FormField label="Name" htmlFor="reservation-name">
             <input
               type="text"
@@ -86,6 +93,9 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.name}
+              required
+              minLength={2}
+              aria-invalid={!!errors.name}
             />
             {errors.name && touched.name && <div className="error">{errors.name}</div>}
           </FormField>
@@ -98,6 +108,9 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.mail}
+              required
+              pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
+              aria-invalid={!!errors.mail}
             />
             {errors.mail && touched.mail && <div className="error">{errors.mail}</div>}
           </FormField>
@@ -110,13 +123,16 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               min={minimumDate}
               onChange={(e) => {
                 handleChange(e);
-                dispatchOnDateChange(e.target.value);
+                const selectedDate = new Date(e.target.value); // 🔥 Convert string to Date
+                dispatchOnDateChange(selectedDate); // ✅ Pass Date object
               }}
               onBlur={handleBlur}
               value={values.date}
+              required
             />
             {errors.date && touched.date && <div className="error">{errors.date}</div>}
           </FormField>
+
 
           <FormField label="Time" htmlFor="reservation-time">
             <select
@@ -125,6 +141,7 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.time}
+              required
             >
               {availableTimes.map((time) => (
                 <option key={time} value={time}>
@@ -145,6 +162,7 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.numberOfGuests}
+              required
             />
             {errors.numberOfGuests && touched.numberOfGuests && (
               <div className="error">{errors.numberOfGuests}</div>
@@ -158,6 +176,7 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.occasion}
+              required
             >
               {occasions.map((occasion) => (
                 <option key={occasion} value={occasion}>
@@ -168,7 +187,11 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
             {errors.occasion && touched.occasion && <div className="error">{errors.occasion}</div>}
           </FormField>
 
-          <button className="button-primary" type="submit" disabled={isSubmitting}>
+          <button
+            className="button-primary"
+            type="submit"
+            disabled={isSubmitting || !isValid} // ✅ Disabled if invalid
+          >
             {isSubmitting ? "Processing..." : "Reserve now!"}
           </button>
         </form>

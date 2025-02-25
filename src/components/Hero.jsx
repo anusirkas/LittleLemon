@@ -20,6 +20,7 @@ const Hero = () => {
           className="hero-image"
           src="./images/restaurantfood.jpg"
           alt="Restaurant food"
+          aria-label="A plate of delicious food served at Little Lemon restaurant"
         />
       </div>
     </section>

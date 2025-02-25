@@ -1,9 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import BookingForm from "./components/reservations/BookingForm";
-import { initializeTimes, updateTimes } from "./components/reservations/bookingReducer";
+import { MemoryRouter } from "react-router-dom";
+import BookingForm from "../BookingForm";
+import { initializeTimes, updateTimes } from "../bookingReducer";
 
 test("Renders the BookingForm heading", () => {
-  render(<BookingForm />);
+  render(
+    <MemoryRouter>
+      <BookingForm />
+    </MemoryRouter>
+  );
   const labelElement = screen.getByText("Choose date");
   expect(labelElement).toBeInTheDocument();
 });

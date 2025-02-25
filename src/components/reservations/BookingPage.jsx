@@ -1,24 +1,30 @@
 import React, { useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BookingForm from "./BookingForm";
-import { submitAPI, fetchAPI } from "../api";
+import { submitAPI, fetchAPI } from "./api";
 import { initializeTimes, updateTimes } from "./bookingReducer";
 
 function BookingPage() {
-  const [availableTimes, dispatchOnDateChange] = useReducer(updateTimes, []);
+  const [availableTimes, dispatchOnDateChange] = useReducer(updateTimes, initializeTimes());
+
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the times when the component mounts and dispatch them into the reducer
     async function loadTimes() {
-      const times = await fetchAPI();
+      const today = new Date(); // Ensure we pass a valid Date object
+      console.log("📅 Calling fetchAPI with date:", today);
+
+      const times = await fetchAPI(today);
+      console.log("⏰ Times received from fetchAPI:", times);
+
       dispatchOnDateChange({ type: "UPDATE_TIMES", times });
     }
 
     loadTimes();
-  }, []); // Run only once when the component mounts
+  }, []);
 
+  
   // ✅ Form submission logic (moved from Main.jsx)
   const submitForm = async (formData) => {
     const response = await submitAPI(formData); // Simulate API request
@@ -26,6 +32,10 @@ function BookingPage() {
       navigate("/confirmed", { state: formData }); // ✅ Navigate to confirmation page
     }
   };
+
+
+  // ✅ Debugging availableTimes
+  console.log("Available times:", availableTimes);
 
   return (
     <main>
