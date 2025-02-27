@@ -34,12 +34,16 @@ const customers = [
 
 const Testimonials = () => {
   return (
-    <section className="testimonials">
+    <section className="testimonials" aria-labelledby="testimonials-title">
       <div className="container grid">
-        <h2>Testimonials</h2>
-        {customers.map((customer, index) => (
-          <TestimonialCard key={index} customer={customer} />
-        ))}
+        <h2 id="testimonials-title">Testimonials</h2>
+        <ul role="list" className="testimonial-list">
+          {customers.map((customer, index) => (
+            <li key={index} role="listitem">
+              <TestimonialCard customer={customer} />
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

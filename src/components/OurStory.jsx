@@ -3,7 +3,7 @@ import "./OurStory.css";
 const OurStory = () => {
   return (
     <section className="container grid our-story" id="about">
-      <div className="our-story-description">
+      <article className="our-story-description">
         <h2>Our Story</h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -20,12 +20,14 @@ const OurStory = () => {
           odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
           voluptatem sequi nesciunt.
         </p>
-      </div>
-      <div className="our-story-chefs">
-        {/* Correctly reference images from the public folder */}
-        <img src="/images/Mario and Adrian A.jpg" alt="Chefs Mario and Adrian #1" />
-        <img src="/images/Mario and Adrian B.jpg" alt="Chefs Mario and Adrian #2" />
-      </div>
+      </article>
+      <figure className="our-story-chefs">
+        <img src="/images/Mario and Adrian A.jpg" alt="Two chefs laughing in their restaurant's kitchen." />
+        <figcaption>Mario and Adrian laughing in the kitchen</figcaption>
+
+        <img src="/images/Mario and Adrian B.jpg" alt="Two chefs discussing menu in their restaurant's kitchen." />
+        <figcaption>Mario and Adrian planning the restaurant's menu</figcaption>
+      </figure>
     </section>
   );
 };

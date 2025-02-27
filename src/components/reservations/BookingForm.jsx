@@ -83,6 +83,7 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
         handleSubmit,
         isSubmitting,
         isValid, // ✅ New: Use this to disable submit button when invalid
+        dirty, // Track if form is dirty
       }) => (
         <form onSubmit={handleSubmit} noValidate>
           <FormField label="Name" htmlFor="reservation-name">
@@ -96,8 +97,13 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               required
               minLength={2}
               aria-invalid={!!errors.name}
+              aria-describedby={errors.name && touched.name ? "name-error" : undefined} // Connects error with field
             />
-            {errors.name && touched.name && <div className="error">{errors.name}</div>}
+            {errors.name && touched.name && (
+              <div id="name-error" className="error">
+                {errors.name}
+              </div>
+            )}
           </FormField>
 
           <FormField label="Email address" htmlFor="reservation-mail">
@@ -111,8 +117,13 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               required
               pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
               aria-invalid={!!errors.mail}
+              aria-describedby={errors.mail && touched.mail ? "mail-error" : undefined}
             />
-            {errors.mail && touched.mail && <div className="error">{errors.mail}</div>}
+            {errors.mail && touched.mail && (
+              <div id="mail-error" className="error">
+                {errors.mail}
+              </div>
+            )}
           </FormField>
 
           <FormField label="Date" htmlFor="reservation-date">
@@ -129,10 +140,15 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onBlur={handleBlur}
               value={values.date}
               required
+              aria-invalid={!!errors.date}
+              aria-describedby={errors.date && touched.date ? "date-error" : undefined}
             />
-            {errors.date && touched.date && <div className="error">{errors.date}</div>}
+            {errors.date && touched.date && (
+              <div id="date-error" className="error">
+                {errors.date}
+              </div>
+            )}
           </FormField>
-
 
           <FormField label="Time" htmlFor="reservation-time">
             <select
@@ -142,6 +158,8 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onBlur={handleBlur}
               value={values.time}
               required
+              aria-invalid={!!errors.time}
+              aria-describedby={errors.time && touched.time ? "time-error" : undefined}
             >
               {availableTimes.map((time) => (
                 <option key={time} value={time}>
@@ -149,7 +167,11 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
                 </option>
               ))}
             </select>
-            {errors.time && touched.time && <div className="error">{errors.time}</div>}
+            {errors.time && touched.time && (
+              <div id="time-error" className="error">
+                {errors.time}
+              </div>
+            )}
           </FormField>
 
           <FormField label="Number of guests" htmlFor="reservation-number-guests">
@@ -163,9 +185,13 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onBlur={handleBlur}
               value={values.numberOfGuests}
               required
+              aria-invalid={!!errors.numberOfGuests}
+              aria-describedby={errors.numberOfGuests && touched.numberOfGuests ? "guests-error" : undefined}
             />
             {errors.numberOfGuests && touched.numberOfGuests && (
-              <div className="error">{errors.numberOfGuests}</div>
+              <div id="guests-error" className="error">
+                {errors.numberOfGuests}
+              </div>
             )}
           </FormField>
 
@@ -177,6 +203,8 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
               onBlur={handleBlur}
               value={values.occasion}
               required
+              aria-invalid={!!errors.occasion}
+              aria-describedby={errors.occasion && touched.occasion ? "occasion-error" : undefined}
             >
               {occasions.map((occasion) => (
                 <option key={occasion} value={occasion}>
@@ -184,15 +212,30 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
                 </option>
               ))}
             </select>
-            {errors.occasion && touched.occasion && <div className="error">{errors.occasion}</div>}
+            {errors.occasion && touched.occasion && (
+              <div id="occasion-error" className="error">
+                {errors.occasion}
+              </div>
+            )}
           </FormField>
 
           <button
             className="button-primary"
             type="submit"
-            disabled={isSubmitting || !isValid} // ✅ Disabled if invalid
+            disabled={isSubmitting || !isValid || !dirty} // ✅ Disabled if invalid
+            aria-live="polite" // Notify screen readers when the button is disabled
+            aria-describedby={isSubmitting ? "processing-text" : undefined}
           >
-            {isSubmitting ? "Processing..." : "Reserve now!"}
+            {isSubmitting ? (
+              <>
+                <span id="processing-text" aria-live="assertive">
+                  Processing...
+                </span>
+                {" "}Please wait...
+              </>
+            ) : (
+              "Reserve now!"
+            )}
           </button>
         </form>
       )}

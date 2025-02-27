@@ -48,3 +48,12 @@
     grid-column: 1 / 2;
   }
   }
+
+  .testimonial-list {
+    display: contents; /* Keeps the grid layout without affecting structure */
+  }
+  
+  .testimonial-list li {
+    display: contents; /* Allows <li> to behave as if it doesn't exist */
+  }
+  

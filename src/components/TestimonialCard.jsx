@@ -3,27 +3,26 @@ import { IoMdStar, IoMdStarHalf, IoMdStarOutline } from "react-icons/io";
 
 const TestimonialCard = ({ customer }) => {
   return (
-    <article className="testimonial-card">
-      <img src={customer.image} alt={customer.fullName} />
-      <h4>{customer.fullName}</h4>
-      <span>
+    <article className="testimonial-card" aria-labelledby={`testimonial-${customer.fullName.replace(/\s+/g, '-')}`}>
+      <img src={customer.image} alt={`Photo of ${customer.fullName}`} />
+      <h4 id={`testimonial-${customer.fullName.replace(/\s+/g, '-')}`}>{customer.fullName}</h4>
+
+      <span aria-label={`Customer rating: ${customer.rating.reduce((acc, curr) => acc + curr, 0)} out of 5 stars`}>
         {customer.rating.map((ratingPoint, idx) =>
           ratingPoint === 1 ? (
-            <IoMdStar key={idx} />
+            <IoMdStar key={idx} aria-hidden="true" />
           ) : ratingPoint === 0.5 ? (
-            <IoMdStarHalf key={idx} />
-          ) : ratingPoint === 0 ? (
-            <IoMdStarOutline key={idx} />
-          ) : null
+            <IoMdStarHalf key={idx} aria-hidden="true" />
+          ) : (
+            <IoMdStarOutline key={idx} aria-hidden="true" />
+          )
         )}
         <p>
-          {customer.rating.reduce(
-            (accumulator, currentValue) => accumulator + currentValue,
-            0
-          )} / 5
+          {customer.rating.reduce((acc, curr) => acc + curr, 0)} / 5
         </p>
       </span>
-      <blockquote>
+
+      <blockquote aria-label="Customer review">
         <p>"{customer.says}"</p>
       </blockquote>
     </article>

@@ -12,14 +12,14 @@ import Menu from './components/Menu.jsx';
 import LogIn from './components/LogIn.jsx';
 import ConfirmedBooking from './components/reservations/ConfirmedBooking.jsx';
 import Footer from './components/Footer.jsx';
-import { Route, Routes, BrowserRouter } from 'react-router-dom'; // Combine imports from react-router-dom
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <Header />
-        <Nav />
+      <Header />
+      <Nav aria-label="Main navigation" />
+      <main className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
@@ -31,8 +31,8 @@ function App() {
           <Route path="/specials" element={<Specials />} />
           <Route path="/testimonials" element={<Testimonials />} />
         </Routes>
-        <Footer />
-      </div>
+      </main>
+      <Footer />
     </BrowserRouter>
   );
 }

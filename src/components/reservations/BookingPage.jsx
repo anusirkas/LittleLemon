@@ -7,7 +7,6 @@ import { initializeTimes, updateTimes } from "./bookingReducer";
 function BookingPage() {
   const [availableTimes, dispatchOnDateChange] = useReducer(updateTimes, initializeTimes());
 
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +23,6 @@ function BookingPage() {
     loadTimes();
   }, []);
 
-  
   // ✅ Form submission logic (moved from Main.jsx)
   const submitForm = async (formData) => {
     const response = await submitAPI(formData); // Simulate API request
@@ -33,13 +31,23 @@ function BookingPage() {
     }
   };
 
-
   // ✅ Debugging availableTimes
   console.log("Available times:", availableTimes);
 
   return (
-    <main>
+    <main role="main">
+      {/* Ensure the page title is well defined for screen readers */}
       <h1>Book a Table</h1>
+
+      {/* Remove the ARIA live region for the message */}
+      {/* <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        <p>{availableTimes.length ? "Available times have been updated." : "Fetching available times..."}</p>
+      </div> */}
+
       <BookingForm
         availableTimes={availableTimes}
         dispatchOnDateChange={dispatchOnDateChange}
