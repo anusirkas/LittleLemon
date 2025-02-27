@@ -1,7 +1,6 @@
 import React from 'react';
-import './App.css';
+import './index.css';
 import Header from './components/Header.jsx';
-import Nav from './components/Nav.jsx';
 import BookingPage from './components/reservations/BookingPage.jsx';
 import HomePage from './components/Homepage.jsx';
 import OurStory from './components/OurStory.jsx';
@@ -18,8 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Nav aria-label="Main navigation" />
-      <main className="App">
+      <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
@@ -36,5 +34,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;

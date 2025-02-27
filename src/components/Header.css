@@ -1,0 +1,52 @@
+/* Header container */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 6%;  /* Smaller padding for the header */
+    background-color: white;
+  }
+  
+  /* Logo styling */
+  .logo-container {
+    flex-shrink: 0;  /* Prevent logo from shrinking */
+  }
+  
+  .logo {
+    width: 8rem;  /* Adjust logo size */
+    height: auto;
+  }
+  
+  /* Navigation styling */
+  .nav-links-container {
+    display: flex;
+    justify-content: flex-start;  /* Align links to the left */
+    flex-grow: 1;
+  }
+  
+  /* Ensure header navigation stays in one line */
+.header-nav .nav-links {
+    display: flex;
+    justify-content: flex-end; /* Aligns links to the right */
+    gap: 2rem; /* Space between links */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* More specific header navigation styles */
+.header-nav a.nav-link {
+    color: #495e57;  /* Green color */
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.header-nav .nav-link:hover {
+    text-decoration: underline;
+}
+
+.header-nav a {
+    color: #495e57; /* Ensure green color */
+}

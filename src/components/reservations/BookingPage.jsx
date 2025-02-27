@@ -35,7 +35,7 @@ function BookingPage() {
   console.log("Available times:", availableTimes);
 
   return (
-    <main role="main">
+    <>
       {/* Ensure the page title is well defined for screen readers */}
       <h1>Book a Table</h1>
 
@@ -53,7 +53,7 @@ function BookingPage() {
         dispatchOnDateChange={dispatchOnDateChange}
         submitForm={submitForm} // ✅ Using submitForm properly
       />
-    </main>
+    </>
   );
 }
 

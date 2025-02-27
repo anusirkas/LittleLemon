@@ -31,15 +31,35 @@ header {
   z-index: 999;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Full viewport height */
+}
+
+
+/* Ensures the footer stretches across the full width */
+footer {
+  width: 100%;
+}
+
 main {
   padding-top: 6.25rem;
   min-height: calc(100vh - 6.25rem - 18rem);
+  flex: 1;
 }
 
+/* General styling for all links */
 a {
   text-decoration: none;
-  color: #495e57;
+  color: #495e57;  /* Green color */
 }
+
+/* But exclude links inside header */
+header a {
+  color: #495e57;  /* Green color */
+}
+
 
 h1,
 h2 {

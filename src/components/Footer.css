@@ -1,0 +1,110 @@
+/* Main Footer Styling */
+footer {
+    display: flex;
+    justify-content: space-between;  /* Keeps sections aligned */
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 2.5rem 10%;
+    background-color: #495e57;
+    color: white;
+    gap: 3rem; /* Ensures spacing between sections */
+  }
+  
+
+/* Logo Section */
+.logo-container {
+  flex-basis: 6rem;  /* Set a fixed width for the logo */
+  flex-grow: 0;
+  margin-right: 8rem;  /* Add space to the right of the logo */
+}
+
+.logo {
+  width: 6rem;
+}
+
+/* Footer Sections (Navigation, Contact, Social Media) */
+.footer-sections {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;  /* Keeps even gaps */
+    align-items: flex-start;  /* Aligns items at the top */
+    gap: 4rem;  /* More space between sections */
+    flex-wrap: nowrap;  /* Prevents sections from collapsing into one row */
+  }
+  
+
+/* Title styling (Doormat Navigation, Contact, Follow Us) */
+footer strong {
+  font-weight: bold;
+  margin-bottom: 1rem;  /* Add space below the title */
+  display: block;
+}
+
+/* Social Media Links, Contact List */
+.social-media-links,
+.contact ul {
+  list-style: none;  /* Remove bullet points */
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
+/* Footer Navigation */
+.footer-nav .nav-links {
+    display: block; /* Stacks links vertically */
+    list-style: none;
+}
+
+.nav-links a,
+.contact p,
+.social-media-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-links a:hover, .social-media-links a:hover {
+  text-decoration: underline;
+}
+
+/* Contact Section Spacing */
+.contact li {
+  margin-bottom: 0.75rem;  /* Add space between each contact item */
+  font-style: normal;
+  font-weight: normal;
+}
+
+/* Social Media Links Spacing */
+.social-media-links {
+  display: flex;
+  flex-direction: column;  /* Stack the links vertically */
+  gap: 0.5rem;  /* Reduce gap between links */
+}
+
+.social-media-link {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.social-media-link svg {
+  margin-right: 0.5rem;  /* Space between icon and text */
+}
+
+/* Follow Us Title */
+.social-media-links li:first-child {
+    margin-bottom: 0.5rem;  /* Reduce space below the "Follow Us" title */
+  }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-sections {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
