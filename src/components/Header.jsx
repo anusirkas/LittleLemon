@@ -14,11 +14,11 @@ function Header() {
       {/* Navigation Links */}
       <nav className="header-nav" aria-label="Main Navigation">
             <ul className="nav-links">
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/menu">Menu</Link></li>
-                <li><Link to="/reservations">Reserve a Table</Link></li>
-                <li><Link to="/contact">Contact</Link></li>
+                <li><Link to="/" className="nav-link">Home</Link></li>
+                <li><Link to="/about" className="nav-link">About</Link></li>
+                <li><Link to="/menu" className="nav-link">Menu</Link></li>
+                <li><Link to="/reservations" className="nav-link">Reserve a Table</Link></li>
+                <li><Link to="/contact" className="nav-link">Contact</Link></li>
             </ul>
        </nav>
     </header>

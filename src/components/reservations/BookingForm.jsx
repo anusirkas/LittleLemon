@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import FormField from "./FormField";
 import emailjs from "@emailjs/browser";
+import "./BookingForm.css";
 
 const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ const BookingForm = ({ availableTimes, dispatchOnDateChange, submitForm }) => {
         isValid, // ✅ New: Use this to disable submit button when invalid
         dirty, // Track if form is dirty
       }) => (
-        <form onSubmit={handleSubmit} noValidate>
+        <form className="BookingForm" onSubmit={handleSubmit} noValidate>
           <FormField label="Name" htmlFor="reservation-name">
             <input
               type="text"
