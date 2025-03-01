@@ -1,12 +1,12 @@
 import React from "react";
 
-const LogIn = () => {
+const OrderOnline = () => {
   return (
     <section className="inprogress">
-      <h1>Log In</h1>
+      <h1>Order Online</h1>
       <p>We're working on it. Stay tuned!</p>
     </section>
   );
 };
 
-export default LogIn;
+export default OrderOnline;

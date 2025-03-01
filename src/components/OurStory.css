@@ -63,6 +63,11 @@
   }
 }
 
+.our-story-chefs figcaption {
+  display: none; /* Completely hides the captions */
+}
+
+
 @media (max-width: 715px) {
   .our-story {
     grid-template-rows: repeat(3, auto);

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";  // ✅ Import Link for navigation
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -11,8 +12,6 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.css";
-
-
 
 const contacts = [
   { icon: faLocationDot, info: "123 Pretty Avenue, New York, NY 10009" },
@@ -32,7 +31,7 @@ function Footer() {
     <footer>
       {/* Logo Section */}
       <div className="logo-container">
-         <img src="/images/logo-white.png" alt="Little Lemon Logo" className="logo" />
+        <img src="/images/logo-white.png" alt="Little Lemon Logo" className="footer-logo" />
       </div>
 
       {/* Footer Sections */}
@@ -40,17 +39,42 @@ function Footer() {
         
         {/* Navigation Section */}
         <nav className="footer-nav" aria-label="Footer Navigation">
-            <ul className="nav-links">
-                <li><strong>Doormat Navigation</strong></li>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/menu">Menu</a></li>
-                <li><a href="/reservations">Reservations</a></li>
-                <li><a href="/orderonline">Order Online</a></li>
-                <li><a href="/login">Login</a></li>
-            </ul>
+          <ul className="nav-links">
+            <li><strong>Doormat Navigation</strong></li>
+            <li><Link to="/" className="nav-link">Home</Link></li>
+            <li>
+              <a 
+                href="/#about" 
+                className="nav-link"
+                onClick={(e) => {
+                  if (window.location.pathname !== "/") {
+                    e.preventDefault();
+                    window.location.href = "/#about"; // Force navigation to homepage first
+                  }
+                }}
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <a 
+                href="/#menu" 
+                className="nav-link"
+                onClick={(e) => {
+                  if (window.location.pathname !== "/") {
+                    e.preventDefault();
+                    window.location.href = "/#menu"; // Force navigation to homepage first
+                  }
+                }}
+              >
+                Menu
+              </a>
+            </li>
+            <li><Link to="/reservations" className="nav-link">Reservations</Link></li>
+            <li><Link to="/orderonline" className="nav-link">Order Online</Link></li>
+            <li><Link to="/login" className="nav-link">Login</Link></li>
+          </ul>
         </nav>
-
 
         {/* Contact Section */}
         <address className="contact">

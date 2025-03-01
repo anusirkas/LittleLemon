@@ -1,58 +1,68 @@
-/* Existing .reservations styles */
+/* Ensure that the reservations container is fully centered */
 .reservations {
   min-height: calc(100vh - 6.25rem - 18rem);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center;  /* Center everything horizontally */
+  justify-content: center;  /* Center vertically */
   padding: 2rem 0;
+  text-align: center; /* Ensure text inside is centered */
 }
 
-/* Adjust the form layout to stack labels above inputs */
+/* Adjust the form layout to ensure it's properly centered */
 .BookingForm form {
   max-width: 40rem;  /* Max form width */
-  width: 90%;
+  width: 100%;  /* Ensure the form uses full width but respects max-width */
   padding: 2rem;
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr; /* One column, stack items vertically */
+  grid-template-columns: 1fr; /* Stack fields vertically */
   gap: 1.5rem;
   background: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto; /* Center the form horizontally */
 }
 
-/* Form field (input, select, etc.) styling */
+/* Form field styling (labels and inputs) */
 .BookingForm .form-field {
   display: flex;
   flex-direction: column;  /* Stack label and input vertically */
   gap: 0.5rem;
-  width: 100%;  /* Ensure form fields are full width of the container */
+  width: 100%;  /* Ensure form fields take up full width */
+  align-items: center;  /* Center everything */
 }
 
-/* Label styling */
+/* Label styling - Center the text */
 .BookingForm .form-field label {
   font-weight: bold;
   color: #333;
   font-size: 1rem;
+  text-align: center;  /* Center label text */
+  width: 100%;  /* Ensure it spans full width */
+  display: block;  /* Ensure it takes full width */
 }
 
 /* Form inputs & selects inside .BookingForm */
 .BookingForm input,
 .BookingForm select {
-  width: 100%;  /* Take up full width */
-  max-width: 18rem;  /* Limit max width */
-  height: 3rem;  /* Adjust height */
-  padding: 0.75rem;  /* Adjust padding */
+  width: 100%;  /* Full width */
+  max-width: 18rem;  /* Limit width */
+  height: 3rem;
+  padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 0.375rem;
   font-size: 1rem;
+  margin: 0 auto;  /* Center the input fields */
 }
 
-/* Submit button styling */
+/* Centering the Submit Button */
 .BookingForm button {
   width: max-content;
-  margin: 0 auto;
+  display: flex;  /* Flex to use justify-content */
+  justify-content: center; /* Center the text */
+  align-items: center;
+  margin: 1rem auto 0 auto; /* Center horizontally */
   grid-column: 1 / span 1;
   padding: 0.75rem 1.5rem;
   border-radius: 2rem;
@@ -70,12 +80,6 @@
   cursor: not-allowed;
 }
 
-/* Error messages within .BookingForm */
-.BookingForm .form-field p {
-  font-size: 0.9rem;
-  color: red;
-}
-
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   .BookingForm form {
@@ -84,10 +88,17 @@
 
   .BookingForm .form-field input,
   .BookingForm .form-field select {
-    max-width: 100%; /* Full width of container */
+    max-width: 100%;  /* Full width of container */
   }
 
   .BookingForm form button {
     grid-column: 1 / span 1;
   }
+}
+
+/* Targets only h1, h2, and p inside .reservations */
+.reservations h1,
+.reservations h2,
+.reservations p {
+  align-items: center;
 }

@@ -12,7 +12,7 @@
     flex-shrink: 0;  /* Prevent logo from shrinking */
   }
   
-  .logo {
+  .header-logo {
     width: 12rem !important; /* Force it */
     height: auto !important;
     max-width: none; /* Prevent any max-width issues */

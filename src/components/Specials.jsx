@@ -13,8 +13,8 @@ const meals = [
     },
     {
       name: "Bruschetta",
-      image: "/images/bruschetta.svg",
-      price: "$6.79",
+      image: "/images/bruchetta.svg",
+      price: "$6.50",
       description: `Our Bruschetta is made from grilled bread that has been
         smeared with garlic and seasoned with salt and olive oil.`,
     },
