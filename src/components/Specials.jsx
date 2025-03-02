@@ -5,7 +5,7 @@ import MealCard from "./MealCard";
 const meals = [
     {
       name: "Greek Salad",
-      image: "/images/greek salad.jpg",
+      image: "/images/greek-salad.jpg",
       price: "$10.00",
       description: `The famous greek salad of crispy lettuce, peppers, olives and
         our Chicago style feta cheese, garnished with crunchy garlic and rosemary
@@ -13,7 +13,7 @@ const meals = [
     },
     {
       name: "Bruschetta",
-      image: "/images/bruchetta.svg",
+      image: "/images/bruschetta.jpg",
       price: "$6.50",
       description: `Our Bruschetta is made from grilled bread that has been
         smeared with garlic and seasoned with salt and olive oil.`,
@@ -24,7 +24,7 @@ const meals = [
       price: "$8.50",
       description: `This comes straight from grandma's recipe book, every last
         ingredient has been sourced and is as authentic as can be imagined.`,
-    },  
+    },
 ];
 
 const Specials = () => {

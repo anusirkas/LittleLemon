@@ -22,11 +22,11 @@ const OurStory = () => {
         </p>
       </article>
       <figure className="our-story-chefs">
-        <img src="/images/Mario and Adrian A.jpg" alt="Two chefs laughing in their restaurant's kitchen." />
-        <figcaption>Mario and Adrian laughing in the kitchen</figcaption>
-
-        <img src="/images/Mario and Adrian b.jpg" alt="Two chefs discussing menu in their restaurant's kitchen." />
+        <img src="/images/chefs-mario-and-adrian_1.jpg" alt="Two chefs planning their restaurant's menu." />
         <figcaption>Mario and Adrian planning the restaurant's menu</figcaption>
+
+        <img src="/images/chefs-mario-and-adrian_2.jpg" alt="Two chefs laughing in their restaurant's kitchen." />
+        <figcaption>Mario and Adrian laughing in the kitchen</figcaption>
       </figure>
     </section>
   );
